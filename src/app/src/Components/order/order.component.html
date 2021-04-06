@@ -1,0 +1,15 @@
+<input
+  autofocus="true"
+  autocomplete="off"
+  name="pokemon"
+  placeholder="Type the pokemon you want to find"
+  [(ngModel)]="pokeSearch"
+  (keyup.enter)="getPokemon()"
+/>
+<ul *ngFor="let pokemon of pokemonList">
+  <li>{{ pokemon.name }}</li>
+</ul>
+
+<br />
+<button (click)="clear()">Clear list</button>
+<footer></footer>
