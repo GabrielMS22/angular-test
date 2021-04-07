@@ -2,6 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PokemonService } from '../../Services/PokemonService/pokemon.service';
 
+interface Pokemon {
+  pokemon: string
+}
+
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -9,8 +13,10 @@ import { PokemonService } from '../../Services/PokemonService/pokemon.service';
 })
 export class OrderComponent implements OnInit, OnDestroy {
   pokemonList: any[] = [];
-  pokeSearch: string = '';
   subscriptions: Subscription[] = [];
+  pokeForm: Pokemon = {
+    pokemon: ''
+  }
 
   constructor(private pokemonService: PokemonService) {}
 
@@ -18,7 +24,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   getPokemon(): void {
     let sub = this.pokemonService
-      .getPokemon(this.pokeSearch)
+      .getPokemon(this.pokeForm.pokemon)
       .subscribe((pokemon) => {
         const duplicated = this.pokemonList.find((x) => x.name == pokemon.name);
 
@@ -28,6 +34,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       });
 
     this.subscriptions.push(sub);
+    this.pokeForm.pokemon = '';
   }
 
   clear(): void {

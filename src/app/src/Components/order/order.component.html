@@ -1,15 +1,32 @@
-<input
-  autofocus="true"
-  autocomplete="off"
-  name="pokemon"
-  placeholder="Type the pokemon you want to find"
-  [(ngModel)]="pokeSearch"
-  (keyup.enter)="getPokemon()"
-/>
-<ul *ngFor="let pokemon of pokemonList">
-  <li>{{ pokemon.name }}</li>
-</ul>
+<form (ngSubmit)="getPokemon()" #pokemonForm="ngForm">
+  <div>
+    <input
+      autofocus="true"
+      autocomplete="off"
+      id="pokemon"
+      name="pokemon"
+      placeholder="Type the pokemon you want to find"
+      [(ngModel)]="pokeForm.pokemon"
+      required
+      minlength="2"
+      #name="ngModel"
+    />
+    <button type="submit" [disabled]="!pokemonForm.valid">Search</button>
+  </div>
+</form>
+<div class="pokeListFlex">
+  <div *ngIf="pokemonList.length > 0">
+    <ul *ngFor="let pokemon of pokemonList | weight: 70">
+      <li>{{ pokemon.name | uppercase }}</li>
+    </ul>
+  </div>
 
+  <div *ngIf="pokemonList.length > 0">
+    <ul *ngFor="let pokemon of pokemonList">
+      <li>{{ pokemon.name }}</li>
+    </ul>
+  </div>
+</div>
 <br />
 <button (click)="clear()">Clear list</button>
 <footer></footer>
